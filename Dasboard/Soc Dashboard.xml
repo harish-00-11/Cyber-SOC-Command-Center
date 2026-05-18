@@ -1,0 +1,858 @@
+<dashboard version="1.1" theme="dark" stylesheet="soc_style_2.css">
+
+  <label>CYBER SOC COMMAND CENTER</label>
+
+  <row>
+    <panel>
+      <html>
+        <div class="alert-banner" style="background:#1a0000;border:2px solid #ff003c;border-radius:14px;padding:20px 30px;text-align:center;">
+          <div style="font-family:'Orbitron',monospace;font-size:28px;font-weight:900;color:#ff003c;letter-spacing:5px;">
+            <span style="display:inline-block;width:10px;height:10px;background:#ff003c;border-radius:50%;margin-right:10px;animation:blink 1s infinite;"></span>
+            LIVE THREAT MONITORING ACTIVE
+            <span style="display:inline-block;width:10px;height:10px;background:#ff003c;border-radius:50%;margin-left:10px;animation:blink 1s infinite;"></span>
+          </div>
+          <div style="font-family:'Share Tech Mono',monospace;font-size:11px;color:rgba(255,80,80,0.6);letter-spacing:3px;margin-top:8px;">
+            UNAUTHORIZED ACCESS IS STRICTLY PROHIBITED — ALL ACTIVITY IS MONITORED AND LOGGED
+          </div>
+          <div style="height:4px;border-radius:2px;background:linear-gradient(90deg,#00ff41,#ffb700,#ff003c);margin-top:12px;"/>
+          <div style="display:flex;justify-content:space-between;font-size:9px;font-family:'Orbitron',monospace;letter-spacing:2px;color:rgba(255,255,255,0.2);margin-top:4px;">
+            <span>LOW</span><span>MEDIUM</span><span>HIGH</span><span style="color:#ff003c;">CRITICAL</span>
+          </div>
+        </div>
+      </html>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <html>
+        <div style="display:flex;gap:10px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;flex-wrap:wrap;">
+          <span style="padding:5px 12px;border:1px solid #00ff41;color:#00ff41;border-radius:4px;background:rgba(0,255,65,0.05);">&#9679; SIEM: ONLINE</span>
+          <span style="padding:5px 12px;border:1px solid #00ff41;color:#00ff41;border-radius:4px;background:rgba(0,255,65,0.05);">&#9679; WINEVENTLOG: ACTIVE</span>
+          <span style="padding:5px 12px;border:1px solid #ff003c;color:#ff003c;border-radius:4px;background:rgba(255,0,60,0.05);">&#9888; BRUTE FORCE DETECTED</span>
+          <span style="padding:5px 12px;border:1px solid #ffb700;color:#ffb700;border-radius:4px;background:rgba(255,183,0,0.05);">&#9889; RDP ATTACK IN PROGRESS</span>
+          <span style="padding:5px 12px;border:1px solid #00e5ff;color:#00e5ff;border-radius:4px;background:rgba(0,229,255,0.05);">&#128225; FEEDS: CONNECTED</span>
+        </div>
+      </html>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <html>
+        <div style="font-family:'Orbitron',monospace;font-size:10px;letter-spacing:4px;color:rgba(0,229,255,0.45);margin-bottom:6px;">&#9658; THREAT INTELLIGENCE OVERVIEW</div>
+      </html>
+    </panel>
+  </row>
+
+  <!-- KPI ROW 1 -->
+  <row>
+
+    <panel id="panel_failed_logins">
+      <title>FAILED LOGIN ATTEMPTS</title>
+      <single>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4625 OR EventID=4625)
+| stats count
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">block</option>
+        <option name="rangeColors">["0xdc2626","0xdc2626"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="useColors">true</option>
+      </single>
+    </panel>
+
+    <panel id="panel_success_logins">
+      <title>SUCCESSFUL LOGINS</title>
+      <single>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4624 OR EventID=4624)
+| stats count
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="rangeColors">["0x22c55e","0x22c55e"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="useColors">true</option>
+      </single>
+    </panel>
+
+    <panel id="panel_rdp_success">
+      <title>SUCCESSFUL RDP LOGINS</title>
+      <single>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4624 OR EventID=4624)
+(LogonType=10 OR LogonType="10" OR Logon_Type=10 OR Logon_Type="10" OR LogonType="RemoteInteractive")
+| stats count
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="rangeColors">["0x0ea5e9","0x0ea5e9"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="useColors">true</option>
+      </single>
+    </panel>
+
+    <panel id="panel_failed_rdp">
+      <title>FAILED RDP LOGINS</title>
+      <single>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4625 OR EventID=4625)
+(LogonType=10 OR LogonType="10" OR Logon_Type=10 OR Logon_Type="10" OR LogonType="RemoteInteractive")
+| stats count
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="rangeColors">["0xef4444","0xef4444"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="useColors">true</option>
+      </single>
+    </panel>
+
+  </row>
+
+  <!-- KPI ROW 2 -->
+  <row>
+
+    <panel>
+      <title>BRUTE FORCE ALERTS</title>
+      <single>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4625 OR EventID=4625)
+| eval src_ip=coalesce(Source_Network_Address,SourceNetworkAddress,IpAddress,Client_Address,src_ip)
+| where src_ip!="-" AND isnotnull(src_ip)
+| bucket span=5m _time
+| stats count by _time src_ip
+| where count >= 5
+| stats count as alert_count
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="rangeColors">["0xf59e0b","0xf59e0b"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="useColors">true</option>
+      </single>
+    </panel>
+
+    <panel>
+      <title>ACCOUNT LOCKOUTS</title>
+      <single>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4740 OR EventID=4740)
+| stats count
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="rangeColors">["0xdc2626","0xdc2626"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="useColors">true</option>
+      </single>
+    </panel>
+
+    <panel>
+      <title>UNIQUE ATTACKER IPs</title>
+      <single>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4625 OR EventID=4625)
+| eval src_ip=coalesce(Source_Network_Address,SourceNetworkAddress,IpAddress,Client_Address,src_ip)
+| where src_ip!="-" AND isnotnull(src_ip)
+| stats dc(src_ip) as unique_ips
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="rangeColors">["0xf59e0b","0xf59e0b"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="useColors">true</option>
+      </single>
+    </panel>
+
+    <panel>
+      <title>PRIVILEGE ESCALATION EVENTS</title>
+      <single>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4672 OR EventID=4672)
+| stats count
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="rangeColors">["0xbf00ff","0xbf00ff"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="useColors">true</option>
+      </single>
+    </panel>
+
+  </row>
+
+  <!-- ATTACK TIMELINE -->
+  <row>
+    <panel>
+      <html>
+        <div style="font-family:'Orbitron',monospace;font-size:10px;letter-spacing:4px;color:rgba(0,229,255,0.45);margin-bottom:6px;">&#9658; ATTACK TIMELINE ANALYSIS</div>
+      </html>
+    </panel>
+  </row>
+
+  <row>
+
+    <panel>
+      <title>FAILED LOGIN TIMELINE — EventCode 4625</title>
+      <chart>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4625 OR EventID=4625)
+| timechart span=5m count as "Failed Logins"
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.seriesColors">["0xff003c"]</option>
+        <option name="charting.chart.areaOpacity">0.2</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+
+    <panel>
+      <title>SUCCESSFUL LOGIN TIMELINE — EventCode 4624</title>
+      <chart>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4624 OR EventID=4624)
+| timechart span=5m count as "Successful Logins"
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.seriesColors">["0x00e5ff"]</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+
+  </row>
+
+  <!-- ATTACKER IPS -->
+  <row>
+    <panel>
+      <html>
+        <div style="font-family:'Orbitron',monospace;font-size:10px;letter-spacing:4px;color:rgba(0,229,255,0.45);margin-bottom:6px;">&#9658; THREAT ACTOR INTELLIGENCE</div>
+      </html>
+    </panel>
+  </row>
+
+  <row>
+
+    <panel>
+      <title>TOP ATTACKER IPs — FAILED LOGINS</title>
+      <chart>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4625 OR EventID=4625)
+| eval src_ip=coalesce(Source_Network_Address,SourceNetworkAddress,IpAddress,Client_Address,src_ip)
+| where src_ip!="-" AND src_ip!="::1" AND src_ip!="127.0.0.1" AND src_ip!="localhost" AND isnotnull(src_ip)
+| stats count by src_ip
+| sort -count
+| head 10
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.seriesColors">["0xff003c"]</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+
+    <panel>
+      <title>SUCCESSFUL LOGIN SOURCE IPs</title>
+      <chart>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4624 OR EventID=4624)
+NOT user="ANONYMOUS LOGON"
+| eval src_ip=coalesce(Source_Network_Address,SourceNetworkAddress,IpAddress,Client_Address,src_ip)
+| where src_ip!="-" AND src_ip!="::1" AND src_ip!="127.0.0.1" AND src_ip!="localhost" AND isnotnull(src_ip)
+| stats count by src_ip
+| sort -count
+| head 10
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.seriesColors">["0x00e5ff"]</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+
+  </row>
+
+  <!-- RDP + FAILED TABLES -->
+  <row>
+    <panel>
+      <html>
+        <div style="font-family:'Orbitron',monospace;font-size:10px;letter-spacing:4px;color:rgba(0,229,255,0.45);margin-bottom:6px;">&#9658; REAL-TIME EVENT ANALYSIS</div>
+      </html>
+    </panel>
+  </row>
+
+  <row>
+
+    <panel>
+      <title>RDP LOGIN EVENTS — EventCode 4624 LogonType=10</title>
+      <table>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4624 OR EventID=4624)
+(LogonType=10 OR LogonType="10" OR Logon_Type=10 OR Logon_Type="10" OR LogonType="RemoteInteractive")
+| eval user=coalesce(TargetUserName,SubjectUserName,Account_Name,user)
+| eval src_ip=coalesce(Source_Network_Address,SourceNetworkAddress,IpAddress,Client_Address,src_ip)
+| eval logon_type=coalesce(LogonType,Logon_Type)
+| table _time user src_ip host logon_type
+| rename _time as "Time" user as "User" src_ip as "Source IP" host as "Host" logon_type as "Logon Type"
+| sort - _time
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="count">15</option>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+
+    <panel>
+      <title>FAILED LOGIN EVENTS — EventCode 4625</title>
+      <table>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4625 OR EventID=4625)
+| eval user=coalesce(TargetUserName,SubjectUserName,Account_Name,user)
+| eval src_ip=coalesce(Source_Network_Address,SourceNetworkAddress,IpAddress,Client_Address,src_ip)
+| eval reason=coalesce(Failure_Reason,Status,SubStatus)
+| eval logon_type=coalesce(LogonType,Logon_Type)
+| table _time user src_ip reason logon_type host
+| rename _time as "Time" user as "User" src_ip as "Source IP" reason as "Failure Reason" logon_type as "Logon Type" host as "Host"
+| sort - _time
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="count">15</option>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+
+  </row>
+
+  <!-- ADVANCED THREAT DETECTION -->
+  <row>
+    <panel>
+      <html>
+        <div style="font-family:'Orbitron',monospace;font-size:10px;letter-spacing:4px;color:rgba(0,229,255,0.45);margin-bottom:6px;">&#9658; ADVANCED THREAT DETECTION</div>
+      </html>
+    </panel>
+  </row>
+
+  <row>
+
+    <panel>
+      <title>BRUTE FORCE DETECTION — &gt;5 Attempts per 5 Min</title>
+      <table>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4625 OR EventID=4625)
+| eval src_ip=coalesce(Source_Network_Address,IpAddress,Client_Address,src_ip)
+| where isnotnull(src_ip) AND src_ip!="-" AND src_ip!="::1" AND src_ip!="127.0.0.1"
+| bucket span=5m _time
+| stats count values(host) as host by _time src_ip
+| where count > 5
+| rename _time as "Window" src_ip as "Source IP" count as "Attempt Count" host as "Target Host"
+| sort - "Attempt Count"
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="count">20</option>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+
+    <panel>
+      <title>LATERAL MOVEMENT — EventCode 4648 Explicit Credentials</title>
+      <table>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4648 OR EventID=4648)
+| eval user=coalesce(SubjectUserName,TargetUserName,Account_Name)
+| eval src_ip=coalesce(Source_Network_Address,SourceNetworkAddress,IpAddress,Client_Address,src_ip)
+| eval target=coalesce(TargetServerName,TargetInfo)
+| table _time user src_ip target host
+| rename _time as "Time" user as "User" src_ip as "Source IP" target as "Target Host" host as "Host"
+| sort - _time
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+
+    <panel>
+      <title>PRIVILEGE ESCALATION — EventCode 4672</title>
+      <table>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4672 OR EventID=4672)
+| eval user=coalesce(SubjectUserName,Account_Name,user)
+| eval privs=coalesce(PrivilegeList,Privilege_List)
+| table _time user privs host
+| rename _time as "Time" user as "User" privs as "Privileges" host as "Host"
+| sort - _time
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+
+  </row>
+
+  <!-- POWERSHELL + PROCESSES -->
+  <row>
+
+    <panel>
+      <title>POWERSHELL EXECUTION TIMELINE — Sysmon EventCode 1</title>
+      <chart>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational"
+OR sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational")
+(EventCode=1 OR EventID=1)
+| search (Image="*powershell.exe" OR Image="*pwsh.exe")
+| timechart span=5m count as "PowerShell Executions"
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.seriesColors">["0xf59e0b"]</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+
+    <panel>
+      <title>SUSPICIOUS PROCESS EXECUTION — Sysmon EventCode 1</title>
+      <chart>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational"
+OR sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational")
+(EventCode=1 OR EventID=1)
+| search Image="*powershell.exe" OR Image="*cmd.exe" OR Image="*mimikatz*"
+       OR Image="*wscript.exe" OR Image="*mshta.exe" OR Image="*certutil.exe"
+| eval proc_name=mvindex(split(Image,"\\"),-1)
+| stats count by proc_name
+| sort -count
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.seriesColors">["0xf59e0b"]</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+
+  </row>
+
+  <!-- CREDENTIAL + PASS-THE-HASH -->
+  <row>
+
+    <panel>
+      <title>CREDENTIAL ACCESS — EventCode 4776 NTLM Auth Failures</title>
+      <table>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4776 OR EventID=4776)
+| eval user=coalesce(TargetUserName,SubjectUserName,Account_Name,user)
+| eval workstation=coalesce(Workstation,WorkstationName)
+| eval result=coalesce(ErrorCode,Status,"Unknown")
+| table _time user workstation result host
+| rename _time as "Time" user as "User" workstation as "Workstation" result as "Error Code" host as "Host"
+| sort - _time
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+
+    <panel>
+      <title>PASS-THE-HASH INDICATORS — EventCode 4624 LogonType=3 NTLM</title>
+      <table>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4624 OR EventID=4624)
+(LogonType=3 OR LogonType="3" OR Logon_Type=3 OR Logon_Type="3")
+| eval pkg=coalesce(AuthenticationPackageName,Authentication_Package)
+| where like(pkg,"%NTLM%")
+| eval user=coalesce(TargetUserName,SubjectUserName,Account_Name,user)
+| eval src_ip=coalesce(Source_Network_Address,SourceNetworkAddress,IpAddress,Client_Address,src_ip)
+| where src_ip!="-" AND isnotnull(src_ip)
+| table _time user src_ip pkg host
+| rename _time as "Time" user as "User" src_ip as "Source IP" pkg as "Auth Package" host as "Host"
+| sort - _time
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+
+  </row>
+
+  <!-- GLOBAL THREAT -->
+  <row>
+    <panel>
+      <html>
+        <div style="font-family:'Orbitron',monospace;font-size:10px;letter-spacing:4px;color:rgba(0,229,255,0.45);margin-bottom:6px;">&#9658; GLOBAL THREAT LANDSCAPE</div>
+      </html>
+    </panel>
+  </row>
+
+  <row>
+
+    <panel>
+      <title>THREAT SEVERITY OVERVIEW — ALL EVENTS</title>
+      <chart>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+| eval Severity=case(
+    EventCode=4625 OR EventID=4625, "Critical",
+    EventCode=4740 OR EventID=4740, "High",
+    EventCode=4648 OR EventID=4648, "High",
+    EventCode=4672 OR EventID=4672, "High",
+    EventCode=4624 OR EventID=4624, "Low",
+    EventCode=4776 OR EventID=4776, "Medium",
+    1=1, "Info")
+| stats count by Severity
+| eval sort_order=case(Severity="Critical",1,Severity="High",2,Severity="Medium",3,Severity="Low",4,1=1,5)
+| sort sort_order
+| fields - sort_order
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.chart.style">donut</option>
+        <option name="charting.seriesColors">["0xff003c","0xf59e0b","0x00e5ff","0x00ff41","0x888888"]</option>
+      </chart>
+    </panel>
+
+    <panel>
+      <title>GLOBAL ATTACK MAP</title>
+      <map>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4625 OR EventID=4625)
+| eval src_ip=coalesce(Source_Network_Address,SourceNetworkAddress,IpAddress,Client_Address,src_ip)
+| where src_ip!="-" AND isnotnull(src_ip)
+| iplocation src_ip
+| where isnotnull(lat) AND isnotnull(lon)
+| geostats latfield=lat longfield=lon count
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="mapping.map.zoom">2</option>
+        <option name="mapping.type">marker</option>
+        <option name="mapping.markerLayer.markerMinSize">10</option>
+        <option name="mapping.markerLayer.markerMaxSize">40</option>
+      </map>
+    </panel>
+
+  </row>
+
+  <!-- LIVE ATTACK FEED -->
+  <row>
+    <panel>
+      <html>
+        <div style="font-family:'Orbitron',monospace;font-size:10px;letter-spacing:4px;color:rgba(255,0,60,0.55);margin-bottom:6px;">&#9658; LIVE ATTACK FEED</div>
+      </html>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>LIVE EVENT STREAM — All Critical Activity</title>
+      <table>
+        <search>
+          <query>
+(index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4625 OR EventID=4625 OR EventCode=4624 OR EventID=4624 OR
+ EventCode=4740 OR EventID=4740 OR EventCode=4648 OR EventID=4648 OR
+ EventCode=4672 OR EventID=4672))
+OR
+(index=main
+(sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational"
+OR sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational")
+(EventCode=1 OR EventID=1))
+| eval user=coalesce(TargetUserName,SubjectUserName,Account_Name,user)
+| eval src_ip=coalesce(Source_Network_Address,SourceNetworkAddress,IpAddress,Client_Address,src_ip)
+| eval logon_type=coalesce(LogonType,Logon_Type)
+| eval Severity=case(
+    EventCode=4625 OR EventID=4625, "Critical",
+    EventCode=4740 OR EventID=4740, "High",
+    EventCode=4648 OR EventID=4648, "High",
+    EventCode=4672 OR EventID=4672, "High",
+    match(lower(coalesce(Image,"")),"powershell|mimikatz|mshta"), "High",
+    EventCode=4624 OR EventID=4624, "Low",
+    1=1, "Medium")
+| eval proc=coalesce(Image,"N/A")
+| eval cmd=coalesce(CommandLine,"N/A")
+| table _time Severity host user src_ip EventCode logon_type proc cmd
+| rename _time as "Time" Severity as "Severity" host as "Host"
+         user as "User" src_ip as "Source IP"
+         EventCode as "Event" logon_type as "Logon Type"
+         proc as "Process" cmd as "Command"
+| sort - _time
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="count">25</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+
+  <!-- ACCOUNT LOCKOUTS -->
+  <row>
+
+    <panel>
+      <title>ACCOUNT LOCKOUT EVENTS — EventCode 4740</title>
+      <event>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4740 OR EventID=4740)
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="type">list</option>
+        <option name="count">10</option>
+      </event>
+    </panel>
+
+    <panel>
+      <title>TOP TARGETED ACCOUNTS — Most Failed Logins</title>
+      <chart>
+        <search>
+          <query>
+index=main
+(sourcetype="WinEventLog:Security" OR sourcetype="XmlWinEventLog:Security")
+(EventCode=4625 OR EventID=4625)
+| eval user=coalesce(TargetUserName,Account_Name,user)
+| where user!="N/A" AND user!="-" AND isnotnull(user)
+| stats count by user
+| sort -count
+| head 10
+          </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.seriesColors">["0xff003c"]</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+
+  </row>
+
+  <!-- ATTACK FLOW -->
+  <row>
+    <panel>
+      <html>
+        <div style="font-family:'Orbitron',monospace;font-size:10px;letter-spacing:4px;color:rgba(0,229,255,0.45);margin-bottom:6px;">&#9658; ATTACK CHAIN VISUALIZATION</div>
+      </html>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>ATTACK FLOW — Kali Linux to Windows Victim to SIEM</title>
+      <table>
+        <search>
+          <query>
+| makeresults
+| eval "Attack Stage"="1. Reconnaissance"
+| eval "Source"="Kali Linux (ATTACKER-HOST)"
+| eval "Target"="Windows Victim (TARGET-HOST)"
+| eval "Technique"="T1595 - Active Scanning"
+| eval "Status"="Detected"
+| append [| makeresults | eval "Attack Stage"="2. Initial Access" | eval "Source"="Kali Linux (ATTACKER-HOST)" | eval "Target"="Windows Victim (TARGET-HOST)" | eval "Technique"="T1110 - Brute Force / RDP" | eval "Status"="ACTIVE"]
+| append [| makeresults | eval "Attack Stage"="3. Execution" | eval "Source"="Windows Victim (TARGET-HOST)" | eval "Target"="LOCAL" | eval "Technique"="T1059 - PowerShell" | eval "Status"="Detected"]
+| append [| makeresults | eval "Attack Stage"="4. Privilege Escalation" | eval "Source"="Windows Victim (TARGET-HOST)" | eval "Target"="SYSTEM" | eval "Technique"="T1068 - Exploit Vulnerability" | eval "Status"="Monitoring"]
+| append [| makeresults | eval "Attack Stage"="5. Log Forwarding to SIEM" | eval "Source"="Windows Victim (TARGET-HOST)" | eval "Target"="Ubuntu SIEM (SIEM-SERVER)" | eval "Technique"="Syslog / WinRM" | eval "Status"="Active"]
+| fields - _time
+          </query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+
+  <!-- MITRE ATT&CK -->
+  <row>
+    <panel>
+      <html>
+        <div style="background:#040d18;border-radius:12px;padding:20px;border:1px solid rgba(0,229,255,0.2);">
+          <div style="font-family:'Orbitron',monospace;font-size:14px;color:#00e5ff;letter-spacing:4px;margin-bottom:16px;border-bottom:1px solid rgba(0,229,255,0.15);padding-bottom:10px;">
+            &#9876; MITRE ATT&amp;CK — ACTIVE TACTICS
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <div class="mitre-box">
+              <span class="tactic">INITIAL ACCESS</span>
+              <span class="technique"><span class="mitre-active-dot"></span>T1110 Brute Force</span>
+              <span class="technique"><span class="mitre-active-dot"></span>T1078 Valid Accounts</span>
+              <span class="technique"><span class="mitre-warn-dot"></span>T1021 Remote Services</span>
+            </div>
+            <div class="mitre-box">
+              <span class="tactic">EXECUTION</span>
+              <span class="technique"><span class="mitre-warn-dot"></span>T1059 PowerShell</span>
+              <span class="technique"><span class="mitre-warn-dot"></span>T1059.003 cmd.exe</span>
+              <span class="technique">&#9675; T1204 User Execution</span>
+            </div>
+            <div class="mitre-box">
+              <span class="tactic">PRIVILEGE ESC</span>
+              <span class="technique"><span class="mitre-active-dot"></span>T1068 Exploit Vuln</span>
+              <span class="technique"><span class="mitre-warn-dot"></span>T1055 Proc Inject</span>
+              <span class="technique">&#9675; T1134 Token Manip</span>
+            </div>
+            <div class="mitre-box">
+              <span class="tactic">CREDENTIAL ACCESS</span>
+              <span class="technique"><span class="mitre-active-dot"></span>T1003 Cred Dump</span>
+              <span class="technique"><span class="mitre-warn-dot"></span>T1558 Kerberoast</span>
+              <span class="technique"><span class="mitre-warn-dot"></span>T1110 Brute Force</span>
+            </div>
+            <div class="mitre-box">
+              <span class="tactic">LATERAL MOVEMENT</span>
+              <span class="technique"><span class="mitre-active-dot"></span>T1021.001 RDP</span>
+              <span class="technique"><span class="mitre-warn-dot"></span>T1550 Pass-the-Hash</span>
+              <span class="technique">&#9675; T1080 Shared Content</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:24px;margin-top:14px;font-family:'Share Tech Mono',monospace;font-size:10px;color:rgba(255,255,255,0.35);">
+            <span><span style="color:#ff003c;">&#9679;</span> ACTIVE — Currently observed</span>
+            <span><span style="color:#ffb700;">&#9679;</span> DETECTED — Indicators present</span>
+            <span>&#9675; CLEAN — No evidence</span>
+          </div>
+        </div>
+      </html>
+    </panel>
+  </row>
+
+  <!-- FOOTER -->
+  <row>
+    <panel>
+      <html>
+        <div class="soc-footer">
+          &#9889; CYBER SOC COMMAND CENTER v3.0 — SPLUNK SIEM — ANALYST SESSION ACTIVE — ALL EVENTS LOGGED &#9889;
+        </div>
+      </html>
+    </panel>
+  </row>
+
+</dashboard>

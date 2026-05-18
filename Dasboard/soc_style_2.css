@@ -1,0 +1,374 @@
+/* ============================================================
+   CYBER SOC COMMAND CENTER — soc_style_2.css
+   Place at: /opt/splunk/etc/apps/search/appserver/static/soc_style_2.css
+   Reference in dashboard XML: stylesheet="soc_style_2.css"
+   Compatible with: Splunk 8.x / 9.x  theme="dark"
+   ============================================================ */
+
+/* ── FONTS (loaded from Splunk's own server — no external link needed) ── */
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap");
+
+/* ── ROOT VARIABLES ── */
+:root {
+  --neon-green:  #00ff41;
+  --neon-cyan:   #00e5ff;
+  --neon-red:    #ff003c;
+  --neon-amber:  #ffb700;
+  --neon-purple: #bf00ff;
+  --bg-dark:     #000a00;
+  --bg-panel:    rgba(0, 18, 0, 0.92);
+  --bg-panel2:   rgba(0, 8, 18, 0.92);
+  --border-g:    rgba(0, 255, 65, 0.25);
+  --border-c:    rgba(0, 229, 255, 0.25);
+  --border-r:    rgba(255, 0, 60, 0.35);
+}
+
+/* ── DASHBOARD BODY ── */
+body,
+.dashboard-body {
+  background-color: #000a00 !important;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.12) 2px,
+      rgba(0, 0, 0, 0.12) 4px
+    ) !important;
+  font-family: 'Share Tech Mono', 'Courier New', monospace !important;
+  color: var(--neon-green) !important;
+}
+
+/* ── DASHBOARD LABEL (title bar) ── */
+.dashboard-header h2,
+.dashboard-title {
+  font-family: 'Orbitron', monospace !important;
+  font-size: 22px !important;
+  font-weight: 900 !important;
+  letter-spacing: 6px !important;
+  color: var(--neon-red) !important;
+  text-shadow: 0 0 18px rgba(255, 0, 60, 0.7) !important;
+  text-transform: uppercase !important;
+}
+
+/* ── ROWS ── */
+.dashboard-row {
+  margin-bottom: 10px !important;
+}
+
+/* ── PANELS ── */
+.dashboard-panel,
+.panel-body,
+.splunk-view .panel-body {
+  background: var(--bg-panel) !important;
+  border: 1px solid var(--border-g) !important;
+  border-radius: 8px !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* green top accent line on every panel */
+.dashboard-panel::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+  opacity: 0.5;
+  position: absolute;
+  top: 0; left: 0;
+}
+
+/* ── PANEL TITLES ── */
+.panel-head h3,
+.panel-title,
+.panel-head .panel-title {
+  font-family: 'Orbitron', monospace !important;
+  font-size: 9px !important;
+  letter-spacing: 3px !important;
+  text-transform: uppercase !important;
+  color: rgba(0, 255, 65, 0.55) !important;
+  background: transparent !important;
+  border-bottom: 1px solid rgba(0, 255, 65, 0.1) !important;
+  padding: 8px 12px !important;
+}
+
+/* ── SINGLE VALUE PANELS ── */
+.single-value,
+.single-value .value {
+  font-family: 'Orbitron', monospace !important;
+  color: var(--neon-green) !important;
+  text-shadow: 0 0 14px rgba(0, 255, 65, 0.6) !important;
+}
+
+/* ── TABLES ── */
+.table-chrome table,
+.simple-table table,
+table.table {
+  background: transparent !important;
+  font-family: 'Share Tech Mono', monospace !important;
+  font-size: 11px !important;
+  border-collapse: collapse !important;
+  width: 100% !important;
+}
+
+table.table thead th,
+.table-chrome table thead th,
+.simple-table table thead th {
+  background: rgba(0, 229, 255, 0.06) !important;
+  color: rgba(0, 229, 255, 0.55) !important;
+  font-family: 'Orbitron', monospace !important;
+  font-size: 8px !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.15) !important;
+  padding: 7px 10px !important;
+}
+
+table.table tbody tr td,
+.table-chrome table tbody tr td,
+.simple-table table tbody tr td {
+  color: rgba(0, 255, 65, 0.85) !important;
+  border-bottom: 1px solid rgba(0, 255, 65, 0.05) !important;
+  padding: 6px 10px !important;
+  background: transparent !important;
+}
+
+table.table tbody tr:hover td,
+.table-chrome table tbody tr:hover td {
+  background: rgba(0, 255, 65, 0.04) !important;
+  color: var(--neon-green) !important;
+}
+
+table.table tbody tr:nth-child(even) td {
+  background: rgba(0, 255, 65, 0.02) !important;
+}
+
+/* ── CHARTS — canvas wrappers ── */
+.highcharts-background {
+  fill: transparent !important;
+}
+.highcharts-title,
+.highcharts-subtitle {
+  fill: rgba(0, 255, 65, 0.5) !important;
+  font-family: 'Orbitron', monospace !important;
+  font-size: 10px !important;
+}
+.highcharts-axis-labels text,
+.highcharts-xaxis-labels text,
+.highcharts-yaxis-labels text {
+  fill: rgba(0, 255, 65, 0.4) !important;
+  font-family: 'Share Tech Mono', monospace !important;
+  font-size: 10px !important;
+}
+.highcharts-grid-line {
+  stroke: rgba(0, 255, 65, 0.07) !important;
+}
+.highcharts-axis-line,
+.highcharts-tick {
+  stroke: rgba(0, 255, 65, 0.2) !important;
+}
+.highcharts-tooltip-box {
+  fill: rgba(0, 10, 0, 0.95) !important;
+  stroke: rgba(0, 255, 65, 0.3) !important;
+}
+.highcharts-tooltip text {
+  fill: var(--neon-green) !important;
+  font-family: 'Share Tech Mono', monospace !important;
+}
+.highcharts-legend-item text {
+  fill: rgba(0, 255, 65, 0.6) !important;
+  font-family: 'Share Tech Mono', monospace !important;
+}
+.highcharts-plot-background {
+  fill: transparent !important;
+}
+
+/* ── MAP PANELS ── */
+.splunk-map .leaflet-container {
+  background: #000d00 !important;
+}
+.leaflet-tile {
+  filter: invert(1) hue-rotate(140deg) saturate(0.4) brightness(0.5) !important;
+}
+
+/* ── SCROLLBARS ── */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 255, 65, 0.03);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 65, 0.2);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 65, 0.4);
+}
+
+/* ── HTML PANEL WRAPPERS ── */
+.html-panel-body {
+  background: transparent !important;
+}
+
+/* ── SPLUNK SEARCH CONTROLS ── */
+.splunk-timerange .time-label,
+.search-controls .search-button,
+.search-field .search-input {
+  background: rgba(0, 20, 0, 0.8) !important;
+  border-color: rgba(0, 255, 65, 0.2) !important;
+  color: var(--neon-green) !important;
+  font-family: 'Share Tech Mono', monospace !important;
+}
+
+/* ── EVENT VIEWER ── */
+.events-viewer-header,
+.event-renderer {
+  background: rgba(0, 10, 0, 0.9) !important;
+  color: rgba(0, 255, 65, 0.8) !important;
+  border-color: rgba(0, 255, 65, 0.1) !important;
+  font-family: 'Share Tech Mono', monospace !important;
+  font-size: 11px !important;
+}
+
+/* ── ALERT ANIMATION — for HTML panels that use .alert-banner class ── */
+.alert-banner {
+  animation: pulse-border 2s infinite !important;
+}
+@keyframes pulse-border {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 60, 0.4); }
+  50%       { box-shadow: 0 0 45px rgba(255, 0, 60, 0.8); }
+}
+
+/* ── NEON KPI OVERRIDES by panel class ── */
+
+/* Add class="kpi-red" to <panel> via Simple XML workaround using id attribute */
+#panel_failed_logins .single-value .value,
+#panel_failed_rdp .single-value .value {
+  color: var(--neon-red) !important;
+  text-shadow: 0 0 14px rgba(255, 0, 60, 0.7) !important;
+}
+
+#panel_success_logins .single-value .value {
+  color: var(--neon-green) !important;
+  text-shadow: 0 0 14px rgba(0, 255, 65, 0.7) !important;
+}
+
+#panel_rdp_success .single-value .value {
+  color: var(--neon-cyan) !important;
+  text-shadow: 0 0 14px rgba(0, 229, 255, 0.7) !important;
+}
+
+/* ── SEVERITY BADGE COLORS in tables (set via eval in SPL) ── */
+td[data-value="Critical"],
+td:contains("Critical") {
+  color: var(--neon-red) !important;
+  font-weight: bold !important;
+}
+td[data-value="High"],
+td:contains("High") {
+  color: var(--neon-amber) !important;
+}
+td[data-value="Medium"],
+td:contains("Medium") {
+  color: var(--neon-cyan) !important;
+}
+td[data-value="Low"],
+td:contains("Low") {
+  color: rgba(0, 255, 65, 0.6) !important;
+}
+
+/* ── LIVE FEED BLINK — first row of live table ── */
+.dashboard-row:last-of-type table tbody tr:first-child td {
+  animation: row-highlight 1s ease-out;
+}
+@keyframes row-highlight {
+  0%   { background: rgba(255, 0, 60, 0.15); }
+  100% { background: transparent; }
+}
+
+/* ── MITRE HTML PANEL HELPERS ── */
+.mitre-box {
+  background: rgba(0, 8, 18, 0.9);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  border-radius: 6px;
+  padding: 10px;
+  display: inline-block;
+  margin: 4px;
+  min-width: 120px;
+  vertical-align: top;
+}
+.mitre-box .tactic {
+  font-family: 'Orbitron', monospace;
+  font-size: 7px;
+  letter-spacing: 1px;
+  color: var(--neon-cyan);
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.15);
+  display: block;
+}
+.mitre-box .technique {
+  font-size: 10px;
+  color: rgba(0, 255, 65, 0.7);
+  display: block;
+  padding: 2px 0;
+}
+.mitre-active-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--neon-red);
+  box-shadow: 0 0 5px var(--neon-red);
+  margin-right: 4px;
+  animation: blink 1.2s infinite;
+  vertical-align: middle;
+}
+.mitre-warn-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--neon-amber);
+  box-shadow: 0 0 5px var(--neon-amber);
+  margin-right: 4px;
+  vertical-align: middle;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.15; }
+}
+
+/* ── FLOW VISUALIZATION HELPERS ── */
+.flow-node {
+  display: inline-block;
+  background: rgba(0, 8, 18, 0.92);
+  border-radius: 8px;
+  padding: 12px 16px;
+  text-align: center;
+  min-width: 140px;
+  vertical-align: middle;
+  font-family: 'Orbitron', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+.flow-arrow-text {
+  display: inline-block;
+  vertical-align: middle;
+  color: rgba(255, 183, 0, 0.6);
+  font-size: 22px;
+  padding: 0 10px;
+}
+
+/* ── FOOTER HTML PANEL ── */
+.soc-footer {
+  text-align: center;
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+  letter-spacing: 4px;
+  color: rgba(0, 229, 255, 0.2);
+  padding: 12px;
+  border-top: 1px solid rgba(0, 229, 255, 0.08);
+  margin-top: 10px;
+}
