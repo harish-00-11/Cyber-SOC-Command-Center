@@ -321,25 +321,6 @@ Run PowerShell commands on Windows machine to generate Sysmon logs.
 - Threat Severity Overview
 - MITRE ATT&CK Mapping
 
----
-
-# 📸 Screenshots
-
-Add screenshots inside:
-
-```text
-screenshots/
-```
-
-Example:
-
-```markdown
-<img width="2129" height="1023" alt="sc-1" src="https://github.com/user-attachments/assets/55e8f38d-153b-422c-85f0-f7a7ce8e739e" />
-
-```
-
----
-
 # 🌐 GitHub Upload Steps
 
 ## Initialize Git
