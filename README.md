@@ -1,49 +1,74 @@
 # ⚡ Cyber SOC Command Center
--Cyber SOC Command Center — A real-time Splunk SIEM dashboard for threat detection, attack monitoring, Windows event analysis, brute-force detection, Sysmon logging, and MITRE ATT&amp;CK visualization in a home SOC lab environment.
--A real-time Security Operations Center (SOC) dashboard built using Splunk SIEM to monitor, detect, and analyze cyber attacks in a home lab environment.
+
+A real-time Security Operations Center (SOC) dashboard built using Splunk SIEM to monitor, detect, and analyze cyber attacks in a home lab environment.
+
+This project simulates real-world SOC operations including:
+- Brute force attack detection
+- RDP attack monitoring
+- Failed & successful login tracking
+- Privilege escalation monitoring
+- Lateral movement detection
+- PowerShell abuse detection
+- Threat intelligence visualization
+- MITRE ATT&CK mapping
+
+---
+
+# 📌 Features
+
+## 🔍 Real-Time Monitoring
+- Failed login attempts (Event ID 4625)
+- Successful logins (Event ID 4624)
+- RDP login detection
+- Account lockout monitoring
+- NTLM authentication failures
+- Privilege escalation alerts
+
+## 🚨 Threat Detection
+- Brute force attack detection
+- Suspicious PowerShell execution
+- Pass-the-Hash indicators
+- Lateral movement monitoring
+- Credential access activity
+- Sysmon process monitoring
+
+## 📊 Dashboard Visualizations
+- Threat severity overview
+- Attack timelines
+- Global attack map
+- Live attack feed
+- MITRE ATT&CK mapping
+- Threat actor intelligence
 
 ---
 
 # 🛠 Tech Stack
 
-- **SIEM Platform:** Splunk Enterprise
-- **Operating Systems:** Kali Linux, Windows, Ubuntu
-- **Log Collection:** Splunk Universal Forwarder
-- **Security Monitoring:** Windows Event Logs + Sysmon
-- **Visualization:** Custom Splunk XML Dashboard + CSS
+| Technology | Purpose |
+|---|---|
+| Splunk Enterprise | SIEM Platform |
+| Windows Server / Windows 10 | Victim Machine |
+| Kali Linux | Attacker Machine |
+| Sysmon | Advanced Windows Logging |
+| Splunk Universal Forwarder | Log Forwarding |
+| XML Dashboard | Splunk Dashboard UI |
+| CSS | Custom Dashboard Styling |
 
 ---
 
-# 🚨 Dashboard Features
-
-- Failed & successful login monitoring
-- RDP brute-force attack detection
-- Account lockout monitoring
-- Privilege escalation detection
-- Lateral movement tracking
-- PowerShell execution monitoring
-- Suspicious process detection
-- Pass-the-Hash indicators
-- Threat severity visualization
-- Global attack map
-- MITRE ATT&CK tactic mapping
-- Real-time attack event stream
-
----
-
-# 🏗 SOC Lab Architecture
+# 🏗 Lab Architecture
 
 ```text
-Kali Linux Attacker
-          │
-          ▼
+Kali Linux (Attacker)
+        │
+        ▼
 Windows Victim Machine
-          │
-          ▼
+        │
+        ▼
 Splunk Universal Forwarder
-          │
-          ▼
-Ubuntu Splunk SIEM Server
+        │
+        ▼
+Ubuntu SIEM Server (Splunk Enterprise)
 ```
 
 ---
@@ -54,58 +79,190 @@ Ubuntu Splunk SIEM Server
 cyber-soc-dashboard/
 │
 ├── README.md
+│
 ├── dashboard/
 │   ├── soc_dashboard_v3.xml
 │   └── soc_style_2.css
+│
 ├── screenshots/
 │   └── dashboard_preview.png
+│
 └── docs/
     └── setup_guide.md
 ```
 
 ---
 
-# ⚙ Installation Guide
+# ⚙ Requirements
 
-## 1️⃣ Import Dashboard XML into Splunk
+## Hardware Requirements
+- Minimum 8GB RAM
+- 50GB Storage
+- Intel i5 / Ryzen 5 or higher
 
-- Open Splunk Web
-- Navigate to:
+## Virtualization Software
+Install one of the following:
+- VMware Workstation
+- VirtualBox
+
+---
+
+# 💻 Operating Systems Used
+
+## Attacker Machine
+- Kali Linux
+
+## Victim Machine
+- Windows 10 / Windows Server
+
+## SIEM Server
+- Ubuntu Server/Desktop
+
+---
+
+# 📥 Dependencies
+
+# Ubuntu SIEM Server
+
+## Install Splunk Enterprise
+
+Download Splunk Enterprise:
+
+https://www.splunk.com/en_us/download/splunk-enterprise.html
+
+Install:
+
+```bash
+sudo dpkg -i splunk_package.deb
+```
+
+Start Splunk:
+
+```bash
+sudo /opt/splunk/bin/splunk start --accept-license
+```
+
+Enable boot start:
+
+```bash
+sudo /opt/splunk/bin/splunk enable boot-start
+```
+
+---
+
+# Windows Victim Machine
+
+## Install Sysmon
+
+Download Sysmon:
+
+https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon
+
+Install Sysmon:
+
+```powershell
+sysmon64.exe -i
+```
+
+---
+
+## Install Splunk Universal Forwarder
+
+Download:
+
+https://www.splunk.com/en_us/download/universal-forwarder.html
+
+Configure forwarding to SIEM server.
+
+---
+
+# 🔧 Splunk Configuration
+
+## Step 1 — Login to Splunk
+
+Open browser:
+
+```text
+http://YOUR-SIEM-IP:8000
+```
+
+---
+
+## Step 2 — Enable Receiving Port
+
+Go to:
+
+```text
+Settings → Forwarding and Receiving
+```
+
+Add receiving port:
+
+```text
+9997
+```
+
+---
+
+## Step 3 — Add Data Inputs
+
+Go to:
+
+```text
+Settings → Data Inputs
+```
+
+Enable:
+- WinEventLog
+- Sysmon Logs
+
+---
+
+# 📊 Dashboard Installation
+
+## Step 1 — Create Dashboard
+
+Go to:
 
 ```text
 Dashboards → Create New Dashboard
 ```
 
-- Open the dashboard
-- Click:
+Choose:
+- Dashboard Studio or Classic XML Dashboard
+
+---
+
+## Step 2 — Open Edit Source
+
+Inside dashboard:
 
 ```text
 Edit → Edit Source
 ```
 
-- Delete existing XML code
-- Copy and paste the contents of:
+Delete existing XML code.
+
+Paste contents of:
 
 ```text
 dashboard/soc_dashboard_v3.xml
 ```
 
-- Click **Save**
+Save dashboard.
 
 ---
 
-## 2️⃣ Add Custom CSS Styling
+# 🎨 CSS Styling Installation
 
-Copy the CSS file to Splunk static assets directory:
+Copy CSS file:
 
 ```bash
 sudo cp dashboard/soc_style_2.css \
 /opt/splunk/etc/apps/search/appserver/static/
 ```
 
----
-
-## 3️⃣ Restart Splunk
+Restart Splunk:
 
 ```bash
 sudo /opt/splunk/bin/splunk restart
@@ -113,32 +270,60 @@ sudo /opt/splunk/bin/splunk restart
 
 ---
 
-# 📊 Detection Capabilities
+# 🚀 Running the Project
 
-| Detection Type | Event ID |
-|---|---|
-| Failed Login | 4625 |
-| Successful Login | 4624 |
-| Account Lockout | 4740 |
-| Privilege Escalation | 4672 |
-| Explicit Credential Usage | 4648 |
-| NTLM Authentication | 4776 |
-| Sysmon Process Execution | 1 |
+## Generate Attack Logs
+
+From Kali Linux:
+
+### Nmap Scan
+
+```bash
+nmap TARGET-IP
+```
+
+### Hydra RDP Brute Force
+
+```bash
+hydra -l administrator -P rockyou.txt rdp://TARGET-IP
+```
+
+### SMB Enumeration
+
+```bash
+enum4linux TARGET-IP
+```
+
+### PowerShell Execution
+Run PowerShell commands on Windows machine to generate Sysmon logs.
 
 ---
 
-# 🧠 MITRE ATT&CK Coverage
+# 📈 Dashboard Panels
 
-- T1110 — Brute Force
-- T1021 — Remote Services
-- T1059 — PowerShell Execution
-- T1003 — Credential Dumping
-- T1550 — Pass-the-Hash
-- T1068 — Exploitation for Privilege Escalation
+## Authentication Monitoring
+- Failed Logins
+- Successful Logins
+- RDP Login Tracking
+
+## Threat Detection
+- Brute Force Detection
+- Account Lockouts
+- Lateral Movement
+
+## Sysmon Monitoring
+- PowerShell Execution
+- Suspicious Processes
+- Credential Access
+
+## Threat Intelligence
+- Global Attack Map
+- Threat Severity Overview
+- MITRE ATT&CK Mapping
 
 ---
 
-# 📸 Dashboard Preview
+# 📸 Screenshots
 
 Add screenshots inside:
 
@@ -154,40 +339,87 @@ Example:
 
 ---
 
-# 🚀 GitHub Deployment
+# 🌐 GitHub Upload Steps
 
-Initialize Git repository:
+## Initialize Git
 
 ```bash
 git init
+```
+
+## Add Files
+
+```bash
 git add .
+```
+
+## Commit
+
+```bash
 git commit -m "Initial commit - Cyber SOC Command Center"
 ```
 
-Connect GitHub repository:
+## Connect GitHub Repository
 
 ```bash
 git remote add origin https://github.com/YourUsername/cyber-soc-dashboard.git
+```
+
+## Push to GitHub
+
+```bash
 git branch -M main
 git push -u origin main
 ```
 
 ---
 
-# 🔐 Security Note
+# 🔥 Recommended Improvements
 
-This project was built in an isolated lab environment for educational and defensive cybersecurity purposes only.
+Future enhancements:
+- Wazuh Integration
+- Sigma Rules
+- SOAR Automation
+- Email Alerting
+- Threat Intelligence APIs
+- Malware Sandbox Integration
+- AI-based Threat Detection
 
-No public infrastructure or sensitive information is included in this repository.
+---
+
+# 🛡 MITRE ATT&CK Techniques Covered
+
+| Technique ID | Description |
+|---|---|
+| T1110 | Brute Force |
+| T1021.001 | RDP |
+| T1059 | PowerShell |
+| T1003 | Credential Dumping |
+| T1550 | Pass-the-Hash |
+| T1068 | Privilege Escalation |
+
+---
+
+# ⚠ Disclaimer
+
+This project was developed for educational and defensive cybersecurity purposes in an isolated lab environment.
+
+Do not use these techniques on systems you do not own or have explicit authorization to test.
 
 ---
 
 # 👨‍💻 Author
 
-Cybersecurity Enthusiast focused on:
-- SOC Operations
-- Threat Detection
-- SIEM Engineering
-- Incident Response
-- Threat Hunting
-- Windows Security Monitoring
+Your Name
+
+Cybersecurity Enthusiast | SOC Analyst | Threat Detection | SIEM Monitoring
+
+---
+
+# ⭐ Support
+
+If you found this project useful:
+- Star the repository
+- Fork the project
+- Share with others
+- Contribute improvements
