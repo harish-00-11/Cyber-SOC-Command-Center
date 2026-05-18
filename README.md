@@ -410,7 +410,7 @@ Do not use these techniques on systems you do not own or have explicit authoriza
 
 # 👨‍💻 Author
 
-Your Name
+Harish
 
 Cybersecurity Enthusiast | SOC Analyst | Threat Detection | SIEM Monitoring
 
