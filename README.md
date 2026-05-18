@@ -334,7 +334,8 @@ screenshots/
 Example:
 
 ```markdown
-![Dashboard Preview](screenshots/dashboard_preview.png)
+<img width="2129" height="1023" alt="sc-1" src="https://github.com/user-attachments/assets/55e8f38d-153b-422c-85f0-f7a7ce8e739e" />
+
 ```
 
 ---
