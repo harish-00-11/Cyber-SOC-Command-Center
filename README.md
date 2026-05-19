@@ -13,6 +13,9 @@ This project simulates real-world SOC operations including:
 - MITRE ATT&CK mapping
 
 ---
+# Screenshot
+
+<img src="screenshot/sc-1.png" alt="Dashboard Preview" width="800">
 
 # 📌 Features
 
