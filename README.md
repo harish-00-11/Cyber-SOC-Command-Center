@@ -15,7 +15,7 @@ This project simulates real-world SOC operations including:
 ---
 # Screenshot
 
-<img src="screenshot/sc-1.png" alt="Dashboard Preview" width="800">
+<img src="Screenshot/sc-1.png" alt="Dashboard Preview" width="800">
 
 # 📌 Features
 
