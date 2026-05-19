@@ -298,17 +298,7 @@ ATTACK FLOW — Kali Linux to Windows Victim to SIEM
 
 This is the only section where manual IP replacement is required.
 
-## ⚠ Important
 
-Do NOT upload public IP addresses, production server IPs, or sensitive internal infrastructure details to GitHub.
-
-For public repositories, it is recommended to keep placeholder names such as:
-
-```text
-ATTACKER-HOST
-TARGET-HOST
-SIEM-SERVER
-```
 # 🎨 CSS Styling Installation
 
 Copy CSS file:
