@@ -367,39 +367,6 @@ Run PowerShell commands on Windows machine to generate Sysmon logs.
 - Threat Severity Overview
 - MITRE ATT&CK Mapping
 
-# 🌐 GitHub Upload Steps
-
-## Initialize Git
-
-```bash
-git init
-```
-
-## Add Files
-
-```bash
-git add .
-```
-
-## Commit
-
-```bash
-git commit -m "Initial commit - Cyber SOC Command Center"
-```
-
-## Connect GitHub Repository
-
-```bash
-git remote add origin https://github.com/YourUsername/cyber-soc-dashboard.git
-```
-
-## Push to GitHub
-
-```bash
-git branch -M main
-git push -u origin main
-```
-
 ---
 
 # 🔥 Recommended Improvements
